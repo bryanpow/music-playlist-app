@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require('cors');
 const app = express();
 const {
   serveSongs,
@@ -8,7 +9,7 @@ const {
   deleteSong,
 } = require("./controllers/SongController");
 const port = process.env.PORT || 8082;
-
+app.use(cors());
 app.use(express.json());
 
 app.get("/songs", serveSongs);
