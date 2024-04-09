@@ -1,8 +1,38 @@
 import { useState } from "react";
-function SongCard({ title, artist, id, onDelete, onEdit }) {
+function SongCard({ title, artist, id, editedSong, setEditedSong}) {
   const [newTitle, setTitle] = useState(title);
   const [newArtist, setArtist] = useState(artist);
   const [isEditing, setIsEditing] = useState(false);
+
+
+  const onEdit = (id, title, artist) => {
+    const dofetch = async () => {
+      const res = await fetch(`http://localhost:8082/songs/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ title, artist }),
+      });
+      if (res.ok) {
+        setIsEditing(false);
+        setEditedSong(!editedSong)
+      }
+    }
+    dofetch()
+  }
+
+  const onDelete = (id) => {
+    const dofetch = async () => {
+      const res = await fetch(`http://localhost:8082/songs/${id}`, {
+        method: "DELETE",
+      });
+      if (res.ok) {
+        setEditedSong(!editedSong)
+      }
+    }
+    dofetch()
+  }
   return (
     <div className="w-[250px] border p-10">
       <img
