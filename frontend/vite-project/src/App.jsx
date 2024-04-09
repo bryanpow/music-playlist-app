@@ -1,30 +1,35 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from "react";
 
-import './App.css'
-import './index.css'
-import SongFrom from './components/SongFrom'
-import SongsList from './components/SongsList'
+import "./App.css";
+import "./index.css";
+import SongFrom from "./components/SongFrom";
+import SongsList from "./components/SongsList";
 function App() {
-const [addedSong, setAddedSong] = useState(false)
-const [editedSong, setEditedSong] = useState(false)
-const [songs, setSongs] = useState([])
-useEffect(() => {
-  const dofetch = async () => {
-      const res = await fetch('http://localhost:8082/songs')
+  const [addedSong, setAddedSong] = useState(false);
+  const [editedSong, setEditedSong] = useState(false);
+  const [songs, setSongs] = useState([]);
+  useEffect(() => {
+    const dofetch = async () => {
+      const res = await fetch("http://localhost:8082/songs");
       if (res.ok) {
-          const data = await res.json()
-          console.log(data)
-          setSongs(data)
+        const data = await res.json();
+        console.log(data);
+        setSongs(data);
       }
-  }
-  dofetch()
-}, [addedSong, editedSong])
+    };
+    dofetch();
+  }, [addedSong, editedSong]);
+  
   return (
     <>
-    <SongFrom addedSong={addedSong} setAddedSong={setAddedSong}/>
-    <SongsList editedSong={editedSong} setEditedSong={setEditedSong} songs={songs} />
+      <SongFrom addedSong={addedSong} setAddedSong={setAddedSong} />
+      <SongsList
+        editedSong={editedSong}
+        setEditedSong={setEditedSong}
+        songs={songs}
+      />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

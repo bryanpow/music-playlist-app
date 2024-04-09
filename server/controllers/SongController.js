@@ -22,11 +22,12 @@ exports.createSong = (req, res) => {
 }
 
 exports.updateSong = (req, res) => {
-    const song = Song.updateTitle(+req.params.id, req.body.title);
-    if (!song) {
+    const updatedTitle = Song.updateTitle(+req.params.id, req.body.newTitle) ;
+    const updatedArtist = Song.updateArtist(+req.params.id, req.body.newArtist);
+    if (!updatedTitle || !updatedArtist) {
         return res.status(404).json({ error: 'Song not found' });
     }
-    res.json(song);
+    res.json({updatedArtist, updatedTitle});
 }
 
 exports.deleteSong = (req, res) => {

@@ -1,9 +1,8 @@
 import { useState } from "react";
-function SongCard({ title, artist, id, editedSong, setEditedSong}) {
+function SongCard({ title, artist, id, editedSong, setEditedSong }) {
   const [newTitle, setTitle] = useState(title);
   const [newArtist, setArtist] = useState(artist);
   const [isEditing, setIsEditing] = useState(false);
-
 
   const onEdit = (id, title, artist) => {
     const dofetch = async () => {
@@ -12,15 +11,15 @@ function SongCard({ title, artist, id, editedSong, setEditedSong}) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ title, artist }),
+        body: JSON.stringify({ newTitle, newArtist }),
       });
       if (res.ok) {
         setIsEditing(false);
-        setEditedSong(!editedSong)
+        setEditedSong(!editedSong);
       }
-    }
-    dofetch()
-  }
+    };
+    dofetch();
+  };
 
   const onDelete = (id) => {
     const dofetch = async () => {
@@ -28,11 +27,11 @@ function SongCard({ title, artist, id, editedSong, setEditedSong}) {
         method: "DELETE",
       });
       if (res.ok) {
-        setEditedSong(!editedSong)
+        setEditedSong(!editedSong);
       }
-    }
-    dofetch()
-  }
+    };
+    dofetch();
+  };
   return (
     <div className="w-[250px] border p-10">
       <img
@@ -44,13 +43,23 @@ function SongCard({ title, artist, id, editedSong, setEditedSong}) {
 
       {!isEditing ? (
         <div className="pt-2">
-          <h3 className="text-[2rem] w-[100px] m-auto">{title}</h3>
-          <p className="text-[0.8rem]">{artist}</p>
+          <h3 className="text-[2rem] w-[100px] m-auto">{newTitle}</h3>
+          <p className="text-[0.8rem]">{newArtist}</p>
         </div>
       ) : (
         <div className="pt-2">
-          <input  type="text" className="text-[2rem] w-[100px]  m-auto text-center" onChange={(e) => setTitle(e.target.value)} value={newTitle} />
-          <input type="text" className="text-[0.8rem] w-[100px] m-auto text-center" onChange={(e) => setArtist(e.target.value)} value={newArtist} />
+          <input
+            type="text"
+            className="text-[2rem] w-[100px]  m-auto text-center"
+            onChange={(e) => setTitle(e.target.value)}
+            value={newTitle}
+          />
+          <input
+            type="text"
+            className="text-[0.8rem] w-[100px] m-auto text-center"
+            onChange={(e) => setArtist(e.target.value)}
+            value={newArtist}
+          />
         </div>
       )}
       <div className="flex gap-2 justify-center pt-2">
